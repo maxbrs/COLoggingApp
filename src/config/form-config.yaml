@@ -1,0 +1,182 @@
+title: "Carbon Footprint Equipment Logger"
+description: "Track and monitor the carbon footprint of various machinery and equipment"
+
+sections:
+  - name: "Equipment Information"
+    description: "Basic information about the equipment"
+    fields:
+      - name: "equipmentType"
+        label: "Equipment Type"
+        type: "select"
+        required: true
+        options:
+          - value: "excavator"
+            label: "Excavator"
+          - value: "crane"
+            label: "Crane"
+          - value: "forklift"
+            label: "Forklift"
+          - value: "truck"
+            label: "Truck"
+          - value: "generator"
+            label: "Generator"
+          - value: "compressor"
+            label: "Air Compressor"
+          - value: "other"
+            label: "Other"
+      
+      - name: "equipmentModel"
+        label: "Equipment Model/Brand"
+        type: "text"
+        required: true
+        placeholder: "e.g., Caterpillar 320D, Volvo EC140D"
+      
+      - name: "equipmentId"
+        label: "Equipment ID/Serial Number"
+        type: "text"
+        required: true
+        placeholder: "Unique identifier for tracking"
+
+  - name: "Usage Information"
+    description: "Details about equipment usage"
+    fields:
+      - name: "operationDate"
+        label: "Operation Date"
+        type: "date"
+        required: true
+      
+      - name: "operationHours"
+        label: "Hours of Operation"
+        type: "number"
+        required: true
+        min: 0
+        max: 24
+        step: 0.1
+        placeholder: "Hours worked during the day"
+      
+      - name: "fuelType"
+        label: "Fuel Type"
+        type: "select"
+        required: true
+        options:
+          - value: "diesel"
+            label: "Diesel"
+          - value: "gasoline"
+            label: "Gasoline"
+          - value: "electric"
+            label: "Electric"
+          - value: "hybrid"
+            label: "Hybrid"
+          - value: "natural_gas"
+            label: "Natural Gas"
+          - value: "propane"
+            label: "Propane"
+      
+      - name: "fuelConsumption"
+        label: "Fuel Consumption"
+        type: "number"
+        required: true
+        min: 0
+        step: 0.1
+        placeholder: "Liters/kWh consumed"
+        conditionalShow:
+          field: "fuelType"
+          values: ["diesel", "gasoline", "natural_gas", "propane"]
+      
+      - name: "electricityConsumption"
+        label: "Electricity Consumption (kWh)"
+        type: "number"
+        required: true
+        min: 0
+        step: 0.1
+        placeholder: "Kilowatt-hours consumed"
+        conditionalShow:
+          field: "fuelType"
+          values: ["electric", "hybrid"]
+
+  - name: "Environmental Factors"
+    description: "Additional factors affecting carbon footprint"
+    fields:
+      - name: "operatingConditions"
+        label: "Operating Conditions"
+        type: "select"
+        required: true
+        options:
+          - value: "light"
+            label: "Light duty"
+          - value: "normal"
+            label: "Normal duty"
+          - value: "heavy"
+            label: "Heavy duty"
+          - value: "extreme"
+            label: "Extreme conditions"
+      
+      - name: "terrain"
+        label: "Terrain Type"
+        type: "select"
+        required: false
+        options:
+          - value: "flat"
+            label: "Flat/Level"
+          - value: "hilly"
+            label: "Hilly"
+          - value: "mountainous"
+            label: "Mountainous"
+          - value: "urban"
+            label: "Urban/City"
+          - value: "off_road"
+            label: "Off-road"
+      
+      - name: "weatherConditions"
+        label: "Weather Conditions"
+        type: "select"
+        required: false
+        options:
+          - value: "mild"
+            label: "Mild (15-25°C)"
+          - value: "hot"
+            label: "Hot (>25°C)"
+          - value: "cold"
+            label: "Cold (<15°C)"
+          - value: "extreme"
+            label: "Extreme weather"
+
+  - name: "Additional Notes"
+    description: "Any additional information"
+    fields:
+      - name: "maintenanceStatus"
+        label: "Maintenance Status"
+        type: "select"
+        required: false
+        options:
+          - value: "recent"
+            label: "Recently serviced"
+          - value: "due"
+            label: "Maintenance due"
+          - value: "overdue"
+            label: "Maintenance overdue"
+          - value: "unknown"
+            label: "Unknown"
+      
+      - name: "notes"
+        label: "Additional Notes"
+        type: "textarea"
+        required: false
+        placeholder: "Any additional observations or comments..."
+        rows: 4
+
+calculations:
+  # Basic emission factors (kg CO2 per unit)
+  emissionFactors:
+    diesel: 2.68  # kg CO2 per liter
+    gasoline: 2.31  # kg CO2 per liter
+    electric: 0.5  # kg CO2 per kWh (varies by grid)
+    natural_gas: 2.0  # kg CO2 per liter equivalent
+    propane: 1.5  # kg CO2 per liter
+  
+  # Efficiency multipliers based on conditions
+  conditionMultipliers:
+    light: 0.8
+    normal: 1.0
+    heavy: 1.3
+    extreme: 1.6 
