@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormConfig } from '../hooks/useFormConfig';
 import { useApp } from '../context/AppContext';
-import { Save, Plus, Edit, Trash2, Calculator, AlertCircle, CheckCircle, X } from 'lucide-react';
+import { Save, Plus, Edit, Trash2, Calculator, AlertCircle, CheckCircle, X, Copy } from 'lucide-react';
 
 const EmissionsLoggingTab = () => {
   const { config, loading, calculateCarbonFootprint } = useFormConfig();
@@ -12,6 +12,7 @@ const EmissionsLoggingTab = () => {
     updateEntry, 
     deleteEntry, 
     startEditingEntry, 
+    duplicateEntry,
     cancelEditing,
     identification 
   } = useApp();
@@ -116,7 +117,7 @@ const EmissionsLoggingTab = () => {
     const footprint = calculateCarbonFootprint(formData);
     console.log('Calculated footprint:', footprint);
 
-    if (editingEntry) {
+    if (editingEntry && editingEntry.id) {
       updateEntry(editingEntry.id, formData, footprint);
       console.log('Entry updated successfully');
     } else {
@@ -292,10 +293,11 @@ const EmissionsLoggingTab = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <div>
               <h1 style={{ color: '#333', margin: 0 }}>
-                {editingEntry ? 'Edit Entry' : 'Add New Entry'}
+                {editingEntry?.isDuplicate ? 'Duplicate Entry' : editingEntry ? 'Edit Entry' : 'Add New Entry'}
               </h1>
               <p style={{ color: '#666', margin: '0.5rem 0 0 0' }}>
-                {editingEntry ? 'Modify the existing equipment entry' : 'Log equipment usage and carbon emissions'}
+                {editingEntry?.isDuplicate ? 'Modify the duplicated entry and save as new' : 
+                 editingEntry ? 'Modify the existing equipment entry' : 'Log equipment usage and carbon emissions'}
               </p>
             </div>
             {editingEntry && (
@@ -305,7 +307,7 @@ const EmissionsLoggingTab = () => {
                 style={{ padding: '0.5rem 1rem' }}
               >
                 <X size={16} />
-                Cancel Edit
+                {editingEntry.isDuplicate ? 'Cancel Duplicate' : 'Cancel Edit'}
               </button>
             )}
           </div>
@@ -365,10 +367,10 @@ const EmissionsLoggingTab = () => {
               paddingTop: '2rem',
               borderTop: '1px solid #eee'
             }}>
-              <button type="submit" className="btn">
-                <Save size={16} />
-                {editingEntry ? 'Update Entry' : 'Add Entry'}
-              </button>
+                           <button type="submit" className="btn">
+               <Save size={16} />
+               {editingEntry?.isDuplicate ? 'Save as New Entry' : editingEntry ? 'Update Entry' : 'Add Entry'}
+             </button>
             </div>
           </form>
         </div>
@@ -424,22 +426,32 @@ const EmissionsLoggingTab = () => {
                         </div>
                       )}
                     </div>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <button
-                        onClick={() => startEditingEntry(entry.id)}
-                        className="btn btn-secondary"
-                        style={{ padding: '0.5rem', minWidth: 'auto' }}
-                      >
-                        <Edit size={14} />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteEntry(entry.id)}
-                        className="btn btn-danger"
-                        style={{ padding: '0.5rem', minWidth: 'auto' }}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
+                                         <div style={{ display: 'flex', gap: '0.5rem' }}>
+                       <button
+                         onClick={() => startEditingEntry(entry.id)}
+                         className="btn btn-secondary"
+                         style={{ padding: '0.5rem', minWidth: 'auto' }}
+                         title="Edit entry"
+                       >
+                         <Edit size={14} />
+                       </button>
+                       <button
+                         onClick={() => duplicateEntry(entry.id)}
+                         className="btn btn-secondary"
+                         style={{ padding: '0.5rem', minWidth: 'auto', background: 'rgba(0, 200, 81, 0.1)', borderColor: 'rgba(0, 200, 81, 0.3)' }}
+                         title="Duplicate entry"
+                       >
+                         <Copy size={14} color="#00c851" />
+                       </button>
+                       <button
+                         onClick={() => handleDeleteEntry(entry.id)}
+                         className="btn btn-danger"
+                         style={{ padding: '0.5rem', minWidth: 'auto' }}
+                         title="Delete entry"
+                       >
+                         <Trash2 size={14} />
+                       </button>
+                     </div>
                   </div>
                 </div>
               ))}

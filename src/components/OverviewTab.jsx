@@ -10,7 +10,8 @@ import {
   Fuel, 
   AlertTriangle,
   CheckCircle,
-  RotateCcw
+  RotateCcw,
+  Copy
 } from 'lucide-react';
 
 const OverviewTab = () => {
@@ -19,6 +20,7 @@ const OverviewTab = () => {
     identification, 
     isSubmitting,
     startEditingEntry, 
+    duplicateEntry,
     deleteEntry, 
     submitAllEntries,
     clearAllEntries 
@@ -112,45 +114,7 @@ const OverviewTab = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-          <button 
-            onClick={handleClearAll}
-            className="btn btn-secondary"
-            disabled={isSubmitting}
-          >
-            <RotateCcw size={16} />
-            Clear All
-          </button>
-          <button 
-            onClick={submitAllEntries}
-            className="btn"
-            disabled={isSubmitting}
-            style={{ 
-              background: isSubmitting 
-                ? '#ccc' 
-                : 'linear-gradient(135deg, #00c851 0%, #007e33 100%)',
-              minWidth: '180px'
-            }}
-          >
-            {isSubmitting ? (
-              <>
-                <div className="spinner" style={{ 
-                  width: '16px', 
-                  height: '16px', 
-                  borderWidth: '2px',
-                  margin: '0'
-                }} />
-                Submitting...
-              </>
-            ) : (
-              <>
-                <Send size={16} />
-                Submit All Entries
-              </>
-            )}
-          </button>
-        </div>
+
       </div>
 
       {/* Entries Table */}
@@ -304,6 +268,20 @@ const OverviewTab = () => {
                         <Edit size={14} />
                       </button>
                       <button
+                        onClick={() => duplicateEntry(entry.id)}
+                        className="btn btn-secondary"
+                        style={{ 
+                          padding: '0.5rem', 
+                          minWidth: 'auto',
+                          fontSize: '0.8rem',
+                          background: 'rgba(0, 200, 81, 0.1)', 
+                          borderColor: 'rgba(0, 200, 81, 0.3)'
+                        }}
+                        title="Duplicate entry"
+                      >
+                        <Copy size={14} color="#00c851" />
+                      </button>
+                      <button
                         onClick={() => handleDeleteEntry(entry.id)}
                         className="btn btn-danger"
                         style={{ 
@@ -342,6 +320,18 @@ const OverviewTab = () => {
             {totalEmissions.toFixed(2)} kg CO₂
           </div>
         </div>
+
+        {/* Clear All Button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+          <button 
+            onClick={handleClearAll}
+            className="btn btn-secondary"
+            disabled={isSubmitting}
+          >
+            <RotateCcw size={16} />
+            Clear All
+          </button>
+        </div>
       </div>
 
       {/* Submission Note */}
@@ -354,13 +344,53 @@ const OverviewTab = () => {
           <CheckCircle size={24} color="#667eea" style={{ marginTop: '0.25rem' }} />
           <div>
             <h3 style={{ color: '#333', margin: '0 0 0.5rem 0' }}>Ready to Submit</h3>
-            <p style={{ color: '#d1d1d1', margin: 0, lineHeight: '1.5' }}>
+            <p style={{ color: '#d1', margin: 0, lineHeight: '1.5' }}>
               Once you submit these entries, they will be sent for processing and cannot be modified. 
               Please review all entries carefully before submitting. You can still edit or delete 
               entries using the action buttons in the table above.
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Submit Button - Moved to Bottom */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        marginTop: '2rem',
+        paddingBottom: '2rem'
+      }}>
+        <button 
+          onClick={submitAllEntries}
+          className="btn"
+          disabled={isSubmitting}
+          style={{ 
+            background: isSubmitting 
+              ? '#ccc' 
+              : 'linear-gradient(135deg, #00c851 0%, #007e33 100%)',
+            minWidth: '200px',
+            padding: '1rem 2rem',
+            fontSize: '1.1rem',
+            fontWeight: '600'
+          }}
+        >
+          {isSubmitting ? (
+            <>
+              <div className="spinner" style={{ 
+                width: '20px', 
+                height: '20px', 
+                borderWidth: '3px',
+                margin: '0'
+              }} />
+              Submitting...
+            </>
+          ) : (
+            <>
+              <Send size={20} />
+              Submit All Entries
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

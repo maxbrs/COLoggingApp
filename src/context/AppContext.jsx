@@ -56,7 +56,7 @@ export const AppProvider = ({ children }) => {
         : entry
     ));
     setEditingEntry(null);
-    toast.success('Entry updated successfully!');
+    toast.success('Entry updated successfully!\nDon\'t forget to submit your entries.');
   };
 
   const deleteEntry = (entryId) => {
@@ -69,6 +69,22 @@ export const AppProvider = ({ children }) => {
     if (entry) {
       setEditingEntry(entry);
       setActiveTab('logging');
+    }
+  };
+
+  const duplicateEntry = (entryId) => {
+    const entry = entries.find(e => e.id === entryId);
+    if (entry) {
+      // Create a copy of the entry data for editing (without the original ID)
+      const duplicatedData = { ...entry.data };
+      setEditingEntry({ 
+        id: null, // No ID means it's a new entry
+        data: duplicatedData,
+        carbonFootprint: entry.carbonFootprint,
+        isDuplicate: true // Flag to indicate this is a duplicate
+      });
+      setActiveTab('logging');
+      toast.success('Entry duplicated! You can now modify and save it as a new entry.');
     }
   };
 
@@ -150,6 +166,7 @@ export const AppProvider = ({ children }) => {
     updateEntry,
     deleteEntry,
     startEditingEntry,
+    duplicateEntry,
     cancelEditing,
     submitAllEntries,
     clearAllEntries
