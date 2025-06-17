@@ -94,52 +94,52 @@ sections:
           field: "fuelType"
           values: ["electric", "hybrid"]
 
-  - name: "Environmental Factors"
-    description: "Additional factors affecting carbon footprint"
-    fields:
-      - name: "operatingConditions"
-        label: "Operating Conditions"
-        type: "select"
-        required: true
-        options:
-          - value: "light"
-            label: "Light duty"
-          - value: "normal"
-            label: "Normal duty"
-          - value: "heavy"
-            label: "Heavy duty"
-          - value: "extreme"
-            label: "Extreme conditions"
-      
-      - name: "terrain"
-        label: "Terrain Type"
-        type: "select"
-        required: false
-        options:
-          - value: "flat"
-            label: "Flat/Level"
-          - value: "hilly"
-            label: "Hilly"
-          - value: "mountainous"
-            label: "Mountainous"
-          - value: "urban"
-            label: "Urban/City"
-          - value: "off_road"
-            label: "Off-road"
-      
-      - name: "weatherConditions"
-        label: "Weather Conditions"
-        type: "select"
-        required: false
-        options:
-          - value: "mild"
-            label: "Mild (15-25°C)"
-          - value: "hot"
-            label: "Hot (>25°C)"
-          - value: "cold"
-            label: "Cold (<15°C)"
-          - value: "extreme"
-            label: "Extreme weather"
+#  - name: "Environmental Factors"
+#    description: "Additional factors affecting carbon footprint"
+#    fields:
+#      - name: "operatingConditions"
+#        label: "Operating Conditions"
+#        type: "select"
+#        required: true
+#        options:
+#          - value: "light"
+#            label: "Light duty"
+#          - value: "normal"
+#            label: "Normal duty"
+#          - value: "heavy"
+#            label: "Heavy duty"
+#          - value: "extreme"
+#            label: "Extreme conditions"
+#
+#      - name: "terrain"
+#        label: "Terrain Type"
+#        type: "select"
+#        required: false
+#        options:
+#          - value: "flat"
+#            label: "Flat/Level"
+#          - value: "hilly"
+#            label: "Hilly"
+#          - value: "mountainous"
+#            label: "Mountainous"
+#          - value: "urban"
+#            label: "Urban/City"
+#          - value: "off_road"
+#            label: "Off-road"
+#
+#      - name: "weatherConditions"
+#        label: "Weather Conditions"
+#        type: "select"
+#        required: false
+#        options:
+#          - value: "mild"
+#            label: "Mild (15-25°C)"
+#          - value: "hot"
+#            label: "Hot (>25°C)"
+#          - value: "cold"
+#            label: "Cold (<15°C)"
+#          - value: "extreme"
+#            label: "Extreme weather"
 
   - name: "Additional Notes"
     description: "Any additional information"

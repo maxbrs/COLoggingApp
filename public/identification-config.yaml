@@ -1,0 +1,82 @@
+title: "Project Identification"
+description: "Please provide the following information to identify your project and reporting period"
+
+fields:
+  - name: "company"
+    label: "Company Name"
+    type: "text"
+    required: true
+    placeholder: "Enter your company name"
+    savePrevious: true
+  
+  - name: "reporter"
+    label: "Reporter Name"
+    type: "text"
+    required: true
+    placeholder: "Enter reporter's full name"
+    savePrevious: true
+  
+  - name: "project"
+    label: "Project Name"
+    type: "text"
+    required: true
+    placeholder: "Enter project name or identifier"
+    savePrevious: true
+  
+  - name: "department"
+    label: "Department/Division"
+    type: "text"
+    required: false
+    placeholder: "Optional: Enter department or division"
+    savePrevious: true
+  
+  - name: "reportingMonth"
+    label: "Reporting Month"
+    type: "select"
+    required: true
+    options:
+      - value: "01"
+        label: "January"
+      - value: "02"
+        label: "February"
+      - value: "03"
+        label: "March"
+      - value: "04"
+        label: "April"
+      - value: "05"
+        label: "May"
+      - value: "06"
+        label: "June"
+      - value: "07"
+        label: "July"
+      - value: "08"
+        label: "August"
+      - value: "09"
+        label: "September"
+      - value: "10"
+        label: "October"
+      - value: "11"
+        label: "November"
+      - value: "12"
+        label: "December"
+  
+  - name: "reportingYear"
+    label: "Reporting Year"
+    type: "select"
+    required: true
+    options:
+      - value: "2024"
+        label: "2024"
+      - value: "2023"
+        label: "2023"
+      - value: "2022"
+        label: "2022"
+      - value: "2025"
+        label: "2025"
+  
+  - name: "location"
+    label: "Project Location"
+    type: "text"
+    required: false
+    placeholder: "Optional: City, Country or Site location"
+    savePrevious: true 

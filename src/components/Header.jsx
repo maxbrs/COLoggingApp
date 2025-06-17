@@ -1,9 +1,11 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, User, Activity } from 'lucide-react';
+import { useApp } from '../context/AppContext';
+import { LogOut, User, Activity, Building, Edit } from 'lucide-react';
 
 const Header = () => {
   const { user, logout } = useAuth();
+  const { identification } = useApp();
 
   return (
     <header style={{
@@ -50,6 +52,30 @@ const Header = () => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {identification && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              background: 'rgba(0, 200, 81, 0.1)',
+              borderRadius: '20px',
+              border: '1px solid rgba(0, 200, 81, 0.2)'
+            }}>
+              <Building size={16} color="#00c851" />
+              <span style={{ color: '#00c851', fontWeight: '600', fontSize: '0.9rem' }}>
+                {identification.company} - {identification.project}
+              </span>
+              <span style={{
+                color: '#00c851',
+                fontSize: '0.75rem',
+                opacity: 0.8
+              }}>
+                {identification.reportingMonth}/{identification.reportingYear}
+              </span>
+            </div>
+          )}
+
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 

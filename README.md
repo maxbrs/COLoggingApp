@@ -5,12 +5,17 @@ A React-based web application for tracking and monitoring the carbon footprint o
 ## Features
 
 - 🔐 **Login Wall**: Secure authentication system with role-based access
-- 📊 **Carbon Footprint Tracking**: Log and calculate CO₂ emissions for different equipment
-- ⚙️ **YAML-Driven Forms**: Easily customize form structure by editing a YAML configuration file
+- 📋 **Project Identification**: Pre-form identification panel with company, project, and reporting period
+- 📚 **Instructions Tab**: Markdown-driven instructions that can be easily updated
+- 📊 **Multi-Entry Logging**: Log multiple equipment entries with edit/delete functionality
+- 📈 **Overview & Submit**: Table view of all entries with submission workflow
+- ⚙️ **YAML-Driven Forms**: Easily customize form structure by editing YAML configuration files
 - 📱 **Responsive Design**: Modern, glassmorphism-inspired UI that works on all devices
-- 💾 **Local Storage**: Automatically saves submissions locally for persistence
-- 🧮 **Real-time Calculations**: Automatic carbon footprint calculations based on usage data
+- 💾 **Smart Storage**: Automatically saves submissions and remembers previous project data
+- 🧮 **Real-time Calculations**: Automatic carbon footprint calculations with live preview
 - 🔄 **Conditional Fields**: Smart form fields that show/hide based on other selections
+- 🎯 **Toast Notifications**: Real-time feedback for all user actions
+- 📊 **Tabbed Interface**: Organized workflow with Instructions, Logging, and Overview tabs
 
 ## Demo Credentials
 
@@ -36,11 +41,71 @@ The application comes with three demo user accounts:
 
 4. **Login** with one of the demo credentials above
 
+5. **Complete the project identification** form with your company and project details
+
+6. **Navigate through the three tabs**:
+   - **Instructions**: Read the comprehensive guide
+   - **Emissions Logging**: Add multiple equipment entries
+   - **Overview & Submit**: Review and submit all entries
+
+## Application Workflow
+
+### 1. Authentication
+Users must first log in with valid credentials to access the application.
+
+### 2. Project Identification
+Before logging emissions, users provide:
+- Company name
+- Reporter name
+- Project name/identifier
+- Reporting month and year
+- Optional department and location
+
+The system remembers previous entries for quick selection.
+
+### 3. Three-Tab Interface
+
+#### Instructions Tab
+- Comprehensive markdown-driven instructions
+- Equipment logging best practices
+- Carbon footprint calculation explanations
+- Data quality guidelines
+
+#### Emissions Logging Tab
+- Add multiple equipment entries
+- Real-time carbon footprint calculations
+- Edit existing entries
+- Delete unwanted entries
+- Preview calculations before saving
+
+#### Overview & Submit Tab
+- Table view of all entries
+- Total emissions summary
+- Edit/delete individual entries
+- Final submission with mock API integration
+- Toast notifications for feedback
+
 ## Configuration
 
-### Customizing the Form
+### Customizing the Identification Form
 
-The entire form structure is controlled by the `public/form-config.yaml` file. You can easily modify this file to:
+The identification panel is controlled by `public/identification-config.yaml`. You can modify:
+- Required fields
+- Field types and validation
+- Dropdown options for months/years
+- Additional project information fields
+
+### Customizing the Instructions
+
+The instructions content is controlled by `public/instructions.md`. Simply edit this markdown file to:
+- Update logging procedures
+- Modify calculation explanations
+- Add company-specific guidelines
+- Include contact information
+
+### Customizing the Emissions Form
+
+The emissions logging form is controlled by `public/form-config.yaml`. You can easily modify this file to:
 
 - Add new equipment types
 - Change form sections and fields
@@ -107,21 +172,30 @@ conditionalShow:
 ```
 src/
 ├── components/
-│   ├── DynamicForm.jsx     # Main form component
-│   ├── Header.jsx          # Application header
-│   └── LoginForm.jsx       # Authentication form
+│   ├── IdentificationForm.jsx    # Project identification form
+│   ├── InstructionsTab.jsx       # Instructions display
+│   ├── EmissionsLoggingTab.jsx   # Equipment logging form
+│   ├── OverviewTab.jsx           # Entry review and submission
+│   ├── TabNavigation.jsx        # Tab navigation component
+│   ├── MainApplication.jsx      # Main tabbed interface
+│   ├── Header.jsx               # Application header
+│   └── LoginForm.jsx            # Authentication form
 ├── context/
-│   └── AuthContext.jsx     # Authentication state management
+│   ├── AuthContext.jsx          # Authentication state management
+│   └── AppContext.jsx           # Application state (entries, submissions)
 ├── hooks/
-│   └── useFormConfig.js    # YAML configuration loader
+│   ├── useFormConfig.js         # YAML configuration loader
+│   └── useIdentificationConfig.js  # Identification form loader
 ├── config/
-│   └── form-config.yaml    # Form configuration (backup)
-├── App.jsx                 # Main application component
-├── main.jsx               # React entry point
-└── index.css              # Global styles
+│   └── form-config.yaml         # Form configuration (backup)
+├── App.jsx                      # Main application component
+├── main.jsx                     # React entry point
+└── index.css                    # Global styles
 
 public/
-└── form-config.yaml       # Main form configuration file
+├── identification-config.yaml   # Project identification form config
+├── instructions.md             # Instructions content (markdown)
+└── form-config.yaml           # Main emissions form configuration
 ```
 
 ## Carbon Footprint Calculations
